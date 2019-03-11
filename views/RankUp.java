@@ -20,15 +20,24 @@ public class RankUp {
 		prompt.setTitle("Rank Up");
 		
 		Text label = new Text();
-		label.setText("Congrats! You now have 500 shekels in your possesion and 500 prestige to your name! Time to rank up");
+		label.setText("Congrats! You now have 50 shekels in your possesion and 50 prestige to your name! Time to rank up");
 		Button knight = new Button("Knight");
-		knight.setOnAction(e -> Controller.rankUpKnight());
+		knight.setOnAction(e -> {
+			Controller.rankUpKnight();
+			prompt.close();
+		});
 		
 		Button priest = new Button("Priest");
-		priest.setOnAction(e -> Controller.rankUpPriest());
+		priest.setOnAction(e -> {
+			Controller.rankUpPriest();
+			prompt.close();
+		});
 		
 		Button merchant = new Button("Merchant");
-		merchant.setOnAction(e -> Controller.rankUpMerchant());
+		merchant.setOnAction(e -> {
+			Controller.rankUpMerchant();
+			prompt.close();
+		});
 		
 		Label question = new Label("Choose your path");
 		
@@ -49,12 +58,17 @@ public class RankUp {
 		prompt.setTitle("Rank Up");
 		
 		Text label = new Text();
-		label.setText("Congrats! You now have 500 prestige to your name! Time to rank up");
+		label.setText("Congrats! You now have 50 prestige to your name! Time to rank up");
 		Button knight = new Button("Knight");
 		knight.setOnAction(e ->{
-			
+			Controller.rankUpKnight();
+			prompt.close();
 		});
 		Button priest = new Button("Priest");
+		priest.setOnAction(e -> {
+			Controller.rankUpPriest();
+			prompt.close();
+		});
 		Label question = new Label("Choose your path");
 		
 		HBox buttons = new HBox(20);
@@ -80,7 +94,7 @@ public class RankUp {
 		});
 		
 		VBox layout = new VBox(15);
-		Scene scene = new Scene(layout, 50, 300);
+		Scene scene = new Scene(layout, 300, 100);
 		prompt.setScene(scene);
 		prompt.show();
 	}
@@ -92,7 +106,7 @@ public class RankUp {
 		prompt.setTitle("On your way up to Duke!");
 		
 		Text label = new Text();
-		label.setText("Congrats! You now have 500 shekels to your name! Time to rank up");
+		label.setText("Congrats! You now have 100 shekels and 100 prestige to your name! Time to rank up");
 		Button duke = new Button("Woah, awesome!");
 		duke.setOnAction(e ->{
 			Controller.rankUpDuke();
@@ -101,7 +115,7 @@ public class RankUp {
 
 		VBox layout = new VBox(15);
 		layout.getChildren().addAll(label, duke);
-		Scene scene = new Scene(layout, 300, 300);
+		Scene scene = new Scene(layout, 300, 100);
 		prompt.setScene(scene);
 		prompt.show();
 	}

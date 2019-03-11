@@ -12,6 +12,7 @@ import models.Wheel;
 import models.enums.CharClass;
 import models.enums.TileColor;
 import models.enums.TileDirection;
+import views.CardEffects;
 import views.Connection;
 import views.DragonPopups;
 import views.PlayerInit;
@@ -21,7 +22,6 @@ import views.SellFamily;
 public class Controller {
 	private static int turn;
 	public static Player[] players;
-	private static ArrayList<Player> skippedPlayers = new ArrayList<>();
 	public static Player currentPlayer;
 	private static boolean gameOver;
 	public final static ArrayList<AbstractMap.SimpleEntry<TileColor, TileDirection>> TILES = new ArrayList<>();
@@ -35,14 +35,6 @@ public class Controller {
 	public static void run() {
 		drago = new Dragon();
 		initBoard();
-	}
-	
-	public static void skipTurn(Player player) {
-		skippedPlayers.add(player);
-	}
-	
-	public static void addTurn() {
-		turn++;
 	}
 	
 	public static void initPlayers(int playerNum) {
@@ -71,30 +63,77 @@ public class Controller {
 	}
 	
 	public static void determineTurnOrder() {
-		int order, spin = 0, numOfPlayers = players.length;
-		Player[] orderedPlayers = new Player[players.length];
+//		int order, spin = 0, numOfPlayers = players.length;
+//		System.out.println("1");
+//		Player[] orderedPlayers = new Player[players.length];
+//		System.out.println("2");
+//		
+//		do {
+//			System.out.println("3");
+//			order = Wheel.spinWheel(numOfPlayers) - 1;
+//			System.out.println("4");
+//			if(order >= 0 && order < numOfPlayers && players[order] != null) {
+//				orderedPlayers[spin] = players[order];
+//				players[order] = null;
+//				numOfPlayers -= 1;
+//				spin += 1;
+//			}
+//			System.out.println("10");
+//		}while(numOfPlayers > 1);
+//		System.out.println("11");
+//		
+//		for(Player player : players) {
+//			System.out.println("12");
+//			if(player != null) {
+//				System.out.println("13");
+//				orderedPlayers[players.length - 1] = player;
+//				System.out.println("14");
+//			}
+//		}
+//		System.out.println("15");
+//		players = orderedPlayers;
+//		System.out.println("Turn order made");
 		
-		do {
-			order = Wheel.spinWheel(numOfPlayers) - 1;
-			if(order >= 0 && order < numOfPlayers && players[order] != null) {
-				orderedPlayers[spin] = players[order];
-				players[order] = null;
-				numOfPlayers -= 1;
-				spin += 1;
+//			int order, spin = 0, numOfPlayers = players.length;
+//			Player[] orderedPlayers = new Player[players.length];
+//			
+//			do {
+//				order = Wheel.spinWheel(numOfPlayers) - 1;
+//				if(order >= 0 && order < numOfPlayers && players[order] != null) {
+//					orderedPlayers[spin] = players[order];
+//					players[order] = null;
+//					numOfPlayers -= 1;
+//					spin += 1;
+//				}
+//			}while(numOfPlayers > 1);
+			
+			// Remove a player from playersToSpin as they are called
+			ArrayList<Player> playersToSpin = new ArrayList<>();
+			
+			for(int p = 0; p < players.length; p++) {
+				playersToSpin.add(players[p]);
 			}
-		}while(numOfPlayers > 1);
-		
-		for(Player player : players) {
-			if(player != null) {
-				orderedPlayers[players.length - 1] = player;
+			
+			ArrayList<Player> orderedPlayers = new ArrayList<>();
+			
+			while(playersToSpin.size() > 0) {
+				int spin = 0;
+				while(spin == 0) {
+					spin = Wheel.spinWheel(playersToSpin.size());
+				}
+				orderedPlayers.add(playersToSpin.get(spin - 1));
+				playersToSpin.remove(spin - 1);
 			}
+			
+			for(int p = 0; p < players.length; p++) {
+				players[p] = orderedPlayers.get(p);
+			}
+			System.out.println("Turn order made");
+			
+			changeTurn();
+			System.out.println(currentPlayer.NAME);
 		}
-		
-		players = orderedPlayers;
-		System.out.println("Turn order made");
-		
-		changeTurn();
-	}
+
 
 	private static void dragonTurn() {
 		drago.setOccupiedTile(rng.nextInt(90) + 5);
@@ -239,27 +278,31 @@ public class Controller {
 		}
 		
 		
-		for(AbstractMap.SimpleEntry<TileColor, TileDirection> tileEntry : TILES) {
-			System.out.println(tileEntry.getKey() + ", " + tileEntry.getValue());
-		}
+//		for(AbstractMap.SimpleEntry<TileColor, TileDirection> tileEntry : TILES) {
+//			System.out.println(tileEntry.getKey() + ", " + tileEntry.getValue());
+//		}
 		System.out.println("Board Initialized");
 	}
 		
 	
 	public static void rankUpKnight() {
 		currentPlayer.getChars().get(0).setCharClass(CharClass.KNIGHT);
+		System.out.println(currentPlayer.toString() + "knight");
 	}
 	
 	public static void rankUpPriest() {
 		currentPlayer.getChars().get(0).setCharClass(CharClass.PRIEST);
+		System.out.println(currentPlayer.toString() + "priest");
 	}
 	
 	public static void rankUpMerchant() {
 		currentPlayer.getChars().get(0).setCharClass(CharClass.MERCHANT);
+		System.out.println(currentPlayer.toString() + "merchant");
 	}
 	
 	public static void rankUpDuke() {
 		currentPlayer.getChars().get(0).setCharClass(CharClass.DUKE);
+		System.out.println(currentPlayer.toString() + "duke");
 	}
 	
 	private static void sellFamily(int familyMem) {
@@ -473,33 +516,34 @@ public class Controller {
 			//TODO add G.U.I. message that everyone has died.
 		}
 		
-		if(skippedPlayers.contains(currentPlayer)) {
-			skippedPlayers.remove(skippedPlayers.indexOf(currentPlayer));
-		} else {
-			checkForLife();
-			System.out.println("Turn changed");
-			System.out.println("Current Player: " + currentPlayer.NAME);
-		}
+		checkForLife();
+		System.out.println("Turn changed");
+		System.out.println("Current Player: " + currentPlayer.NAME);
+		
 		Connection.updateView();
 	}
 	
 	private static void rankUpChar(Player playerToRankUp) {
 		PlayerChar pc = playerToRankUp.getChars().get(0);
 		
-		if(pc.getPrestige() >= 500 && pc.getShekels() >= 500) {
+		if(pc.getCharClass().equals(CharClass.CITIZEN) && pc.getPrestige() >= 50 && pc.getShekels() >= 50) {
 			RankUp.rankUpBoth();
 			
-		} else if(pc.getPrestige() >= 500) {
+		} else if(pc.getCharClass().equals(CharClass.CITIZEN) && pc.getPrestige() >= 50) {
 			RankUp.rankUpPrestige();
 			
-		} else if (pc.getShekels() >= 500) {
+		} else if (pc.getCharClass().equals(CharClass.CITIZEN) && pc.getShekels() >= 50) {
 			RankUp.rankUpShekels();
+		} else if (!pc.getCharClass().equals(CharClass.CITIZEN) && pc.getShekels() >= 100 && pc.getPrestige() >= 100) {
+			RankUp.rankUpDuke();
 		}
+		
 	}
 	
 	public static void drawCard() {
 		ChanceCard chanceCard = new ChanceCard(TILES.get(currentPlayer.getChars().get(0).getOccupiedTile()).getKey(), currentPlayer);
 		System.out.println("Card drawn");
+		CardEffects.message(chanceCard);
 		rankUpChar(currentPlayer);
 		changeTurn();
 //		CardEffects.message(chanceCard);

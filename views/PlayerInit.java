@@ -57,7 +57,6 @@ public class PlayerInit {
 	
 	//ask for Player name
 	public static void playerName() {
-		String name ="";
 		Stage prompt = new Stage();
 		
 		prompt.initModality(Modality.APPLICATION_MODAL);
@@ -69,8 +68,16 @@ public class PlayerInit {
 		Button submit = new Button("Submit");
 		
 		submit.setOnAction(e -> {
-			names.add(playerName.getText());
-			prompt.close();
+			String name = playerName.getText();
+			if(name.trim().isEmpty()) {
+				
+			}
+			else {
+				names.add(playerName.getText());
+				prompt.close();
+				
+			}
+			
 		});
 		
 		VBox layout = new VBox(15);

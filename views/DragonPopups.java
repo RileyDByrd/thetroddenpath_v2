@@ -16,12 +16,13 @@ public class DragonPopups {
 		prompt.initModality(Modality.APPLICATION_MODAL);
 		
 		Text label = new Text();
-		label.setText(pChar.CHARNAME + ", you we're attacked and couldn't escape");
-		Button button = new Button("");
+		label.setText("You were attack by Drago and couldn't escape!");
+		Button button = new Button("Darn");
+		button.setOnAction(e -> prompt.close());
 		
 		VBox layout = new VBox();
 		layout.getChildren().addAll(label, button);
-		Scene scene = new Scene(layout, 100, 300);
+		Scene scene = new Scene(layout, 300, 100);
 		prompt.setScene(scene);
 		prompt.show();
 	}

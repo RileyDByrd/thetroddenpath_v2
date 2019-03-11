@@ -16,14 +16,23 @@ public class CardEffects {
 		stage.setTitle("Card Effect");
 		
 		Text text = new Text();
-		text.setText(chanceCard.getEffectString());
+		System.out.println("1");
+		text.setText(chanceCard.toString());
+		System.out.println("2");
 		Button button = new Button("Okay");
+		System.out.println("3");
 		button.setOnAction(e -> stage.close());
+		System.out.println("4");
 		
 		VBox layout = new VBox(15);
+		System.out.println("5");
 		layout.getChildren().addAll(text, button);
-		Scene scene = new Scene(layout, 300, 100);
+		System.out.println("6");
+		Scene scene = new Scene(layout, 800, 110);
+		System.out.println("7");
 		stage.setScene(scene);
+		System.out.println("8");
 		stage.show();
+		System.out.println("9");
 	}
 }
