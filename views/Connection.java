@@ -32,6 +32,9 @@ public class Connection {
 	@FXML
 	private Pane spinner;
 
+    @FXML
+    private Text charClass;
+	
 	@FXML
 	private Text playerName = new Text();
 
@@ -173,9 +176,10 @@ public class Connection {
 		limbsRemaining.setText("Limbs Remaining: " + currentPlayer.getChars().get(0).getLimbs().size());
 		StringBuilder sb = new StringBuilder();
 		for (int i = 1; i < currentPlayer.getChars().size(); i++) {
-			sb.append(currentPlayer.getChars().get(i).getRole() + ": " + currentPlayer.getChars().get(i).CHARNAME);
+			sb.append(currentPlayer.getChars().get(i).getRole() + ": " + currentPlayer.getChars().get(i).CHARNAME).append(" ");
 		}
 		family.setText(sb.toString());
+		charClass.setText("Class: " + currentPlayer.getChars().get(0).getCharClass());
 
 	}
 
