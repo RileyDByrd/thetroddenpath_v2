@@ -286,24 +286,23 @@ public class Controller {
 		System.out.println("Board Initialized");
 	}
 		
-	
-	public static void rankUpKnight() {
-		currentPlayer.getChars().get(0).setCharClass(CharClass.KNIGHT);
+	public static void rankUpKnight(Player currentPlayer2) {
+		currentPlayer2.getChars().get(0).setCharClass(CharClass.KNIGHT);
 		System.out.println(currentPlayer.toString() + "knight");
 	}
 	
-	public static void rankUpPriest() {
-		currentPlayer.getChars().get(0).setCharClass(CharClass.PRIEST);
+	public static void rankUpPriest(Player currentPlayer2) {
+		currentPlayer2.getChars().get(0).setCharClass(CharClass.PRIEST);
 		System.out.println(currentPlayer.toString() + "priest");
 	}
 	
-	public static void rankUpMerchant() {
-		currentPlayer.getChars().get(0).setCharClass(CharClass.MERCHANT);
+	public static void rankUpMerchant(Player currentPlayer2) {
+		currentPlayer2.getChars().get(0).setCharClass(CharClass.MERCHANT);
 		System.out.println(currentPlayer.toString() + "merchant");
 	}
 	
-	public static void rankUpDuke() {
-		currentPlayer.getChars().get(0).setCharClass(CharClass.DUKE);
+	public static void rankUpDuke(Player currentPlayer2) {
+		currentPlayer2.getChars().get(0).setCharClass(CharClass.DUKE);
 		System.out.println(currentPlayer.toString() + "duke");
 	}
 	
@@ -351,7 +350,7 @@ public class Controller {
 	public static void checkForFam() {
 		System.out.println("Checking fam");
 		if(currentPlayer.getChars().size() > 1) {
-			SellFamily.sellFamily();
+			SellFamily.sellFamily(currentPlayer);
 		} else {
 			SellFamily.familyError();
 		}
@@ -538,15 +537,15 @@ public class Controller {
 		PlayerChar pc = playerToRankUp.getChars().get(0);
 		
 		if(pc.getCharClass().equals(CharClass.CITIZEN) && pc.getPrestige() >= 50 && pc.getShekels() >= 50) {
-			RankUp.rankUpBoth();
+			RankUp.rankUpBoth(currentPlayer);
 			
 		} else if(pc.getCharClass().equals(CharClass.CITIZEN) && pc.getPrestige() >= 50) {
-			RankUp.rankUpPrestige();
+			RankUp.rankUpPrestige(currentPlayer);
 			
 		} else if (pc.getCharClass().equals(CharClass.CITIZEN) && pc.getShekels() >= 50) {
-			RankUp.rankUpShekels();
+			RankUp.rankUpShekels(currentPlayer);
 		} else if (!pc.getCharClass().equals(CharClass.CITIZEN) && pc.getShekels() >= 100 && pc.getPrestige() >= 100) {
-			RankUp.rankUpDuke();
+			RankUp.rankUpDuke(currentPlayer);
 		}
 		
 	}
