@@ -426,7 +426,7 @@ public class Controller {
 		}
 		
 		System.out.println("Checked for win");
-		return !allTurnsAreFin;
+		return allTurnsAreFin;
 	}
 	
 	private static ArrayList<AbstractMap.SimpleEntry<Player, Integer>> resolveDups(ArrayList<AbstractMap.SimpleEntry<Player, Integer>> arrayToDedup) {
