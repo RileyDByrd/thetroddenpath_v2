@@ -59,12 +59,8 @@ public class Connection {
 	}
 
 	public void spinWheel() {
-		if(Controller.hasGivenUp()) {
-			if(Controller.checkForWin()) {
-				views.Main.endGame();
-			} else {
-				// TODO add "you're all losers" message
-			}
+		if(Controller.checkForWin()) {
+			views.Main.endGame();
 		} else if(Controller.currentPlayer.getChars().size() < 1 || Controller.currentPlayer.getChars().get(0).getOccupiedTile() >= 100 || Controller.currentPlayer.getChars().get(0).getWellness() <= 0) {
 			Controller.changeTurn();
 		}

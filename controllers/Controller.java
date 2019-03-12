@@ -372,15 +372,19 @@ public class Controller {
 		System.out.println("Selling spouse");
 	}
 	
-	public static void giveUp() {
-		System.out.println("Giving up");
-		while(currentPlayer.getChars().size() > 0) {
-			currentPlayer.getChars().remove(0);
-		}
+	public static boolean gameIsOver() {
+		return gameOver;
 	}
 	
-	public static boolean hasGivenUp() {
-		return gameOver;
+	public static boolean checkForEnd() {
+		boolean isEnded = false;
+		for(Player p : players) {
+			if(p.getChars().size() > 0 && p.getChars().get(0).getOccupiedTile() < 100) {
+				isEnded = true;
+			}
+		}
+		
+		return isEnded;
 	}
 	
 	public static boolean checkForWin() {
@@ -440,7 +444,7 @@ public class Controller {
 		for(Integer s = 0; s < arrayToDedup.size() - 1; s++) {
 			if(!intsIndexed.contains(arrayToDedup.get(s).getValue())) {
 				intsIndexed.add(s);
-				for(Integer t = s + 1; s < arrayToDedup.size(); t++) {
+				for(Integer t = s + 1; t < arrayToDedup.size(); t++) {
 					
 					// If two values are the same, then have the players spin to see who gets to go first
 					if(arrayToDedup.get(s).getValue().equals(arrayToDedup.get(t).getValue())) {
@@ -526,8 +530,8 @@ public class Controller {
 			//TODO add G.U.I. message that everyone has died.
 		}
 		
-		checkForLife();
 		System.out.println("Turn changed");
+		checkForLife();
 		System.out.println("Current Player: " + currentPlayer.NAME);
 		
 		Connection.updateView();
