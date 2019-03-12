@@ -15,7 +15,7 @@ import models.enums.TileDirection;
 
 public class Connection {
 
-	private int counter = 0;
+	private int previousSpin = 0;
 
 	@FXML
 	private Circle player1;
@@ -82,7 +82,7 @@ public class Connection {
 	public void animateWheel(int spinAmount) {
 		counter++;
 		RotateTransition transition = new RotateTransition(Duration.seconds(2.5), spinner);
-		transition.setByAngle(44);
+		transition.setByAngle(35);
 		transition.play();
 		switch (spinAmount) {
 		case 1:
