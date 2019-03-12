@@ -61,7 +61,7 @@ public class Connection {
 	public void spinWheel() {
 		if(Controller.hasGivenUp()) {
 			if(Controller.checkForWin()) {
-				//TODO add message with winners from players array, which is now sorted from highest scorer to lowest scorer
+				views.Main.endGame();
 			} else {
 				// TODO add "you're all losers" message
 			}
