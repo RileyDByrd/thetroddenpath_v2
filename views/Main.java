@@ -61,10 +61,21 @@ public class Main extends Application {
 		
 		Text label = new Text();
 		label.setText("These are the players' rankings:");
-//		print players in order of most to least points
+		Text first = new Text();
+		first.setText(Controller.players[0].toString());
+		Text second = new Text();
+		second.setText(Controller.players[1].toString());
+		Text third = new Text();
+		Text fourth = new Text();	
+		if(Controller.players.length > 2) {
+			third.setText(Controller.players[2].toString());
+		}
+		if(Controller.players.length > 3) {
+			fourth.setText(Controller.players[3].toString());			
+		}
 		
 		VBox layout = new VBox(20);
-		layout.getChildren().addAll(label);
+		layout.getChildren().addAll(label, first, second, third, fourth);
 		Scene scene = new Scene(layout, 300, 500);
 		window.setScene(scene);
 		window.show();
