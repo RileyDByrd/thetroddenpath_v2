@@ -15,8 +15,6 @@ import models.enums.TileDirection;
 
 public class Connection {
 
-	private int counter = 0;
-
 	@FXML
 	private Circle player1;
 
@@ -59,8 +57,12 @@ public class Connection {
 
 	public void spinWheel() {
 		if(Controller.hasGivenUp()) {
-			//TODO add end screen and coordinate with checkForWin();
-		} else if(Controller.currentPlayer.getChars().get(0).getOccupiedTile() >= 100 || Controller.currentPlayer.getChars().get(0).getWellness() < 0) {
+			if(Controller.checkForWin()) {
+				//TODO add message with winners from players array, which is now sorted from highest scorer to lowest scorer
+			} else {
+				// TODO add "you're all losers" message
+			}
+		} else if(Controller.currentPlayer.getChars().size() < 1 || Controller.currentPlayer.getChars().get(0).getOccupiedTile() >= 100 || Controller.currentPlayer.getChars().get(0).getWellness() <= 0) {
 			Controller.changeTurn();
 		}
 		int spunNumber = Wheel.spinWheel();
@@ -77,7 +79,6 @@ public class Connection {
 	}
 
 	public void animateWheel(int spinAmount) {
-		counter++;
 		RotateTransition transition = new RotateTransition(Duration.seconds(2.5), spinner);
 		transition.setByAngle(44);
 		transition.play();
