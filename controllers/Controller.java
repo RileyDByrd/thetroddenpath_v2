@@ -388,7 +388,7 @@ public class Controller {
 		
 		// If there is one player who is not at the end and is alive, there is one turn that's not finished.
 		for(Player p : players) {
-			if(p.getChars().get(0).getOccupiedTile() != 99 && p.getChars().get(0).getWellness() > 0) {
+			if(p.getChars().get(0).getOccupiedTile() < 100 && p.getChars().get(0).getWellness() > 0) {
 				allTurnsAreFin = false;
 			}
 		}
@@ -500,7 +500,7 @@ public class Controller {
 		return allCharsAreDead;
 	}
 	
-	private static void changeTurn() {		
+	public static void changeTurn() {		
 		dragonTurn();
 		turn++;
 		int cycle = 0;

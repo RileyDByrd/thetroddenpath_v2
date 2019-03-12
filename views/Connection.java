@@ -61,14 +61,22 @@ public class Connection {
 	}
 
 	public void spinWheel() {
-
+		if(Controller.hasGivenUp()) {
+			//TODO add end screen and coordinate with checkForWin();
+		} else if(Controller.currentPlayer.getChars().get(0).getOccupiedTile() >= 100 || Controller.currentPlayer.getChars().get(0).getWellness() < 0) {
+			Controller.changeTurn();
+		}
 		int spunNumber = Wheel.spinWheel();
 		// animation to move that many spaces
 		animateWheel(1);
 		for (int i = 0; i < spunNumber; i++) {
-			animatePiece();
+			if(Controller.currentPlayer.getChars().size() > 0 && Controller.currentPlayer.getChars().get(0).getOccupiedTile() < 100) {
+				animatePiece();
+			}
 		}
-		Controller.drawCard();
+		if(Controller.currentPlayer.getChars().size() > 0 && Controller.currentPlayer.getChars().get(0).getOccupiedTile() < 100) {
+			Controller.drawCard();
+		}
 	}
 
 	public void animateWheel(int spinAmount) {
