@@ -66,7 +66,7 @@ public class Connection {
 		}
 		int spunNumber = Wheel.spinWheel();
 		// animation to move that many spaces
-		animateWheel(1);
+		animateWheel(spunNumber);
 		for (int i = 0; i < spunNumber; i++) {
 			if(Controller.currentPlayer.getChars().size() > 0 && Controller.currentPlayer.getChars().get(0).getOccupiedTile() < 100) {
 				animatePiece();
@@ -77,17 +77,55 @@ public class Connection {
 		}
 	}
 
-	public void animateWheel(int spinAmount) {
-		RotateTransition transition = new RotateTransition(Duration.seconds(2.5), spinner);
-		transition.setByAngle(35);
-		transition.play();
-		switch (spinAmount) {
-		case 1:
-			transition.setByAngle(20);
+public void animateWheel(int spinAmount) {
+        RotateTransition transition = new RotateTransition(Duration.seconds(2.5), spinner);
+        transition.getNode().setRotate(0);
+        switch (spinAmount) {
+        case 1:
+            transition.setByAngle(342);
+            transition.play();
+            
+            break;
+        case 2:
+            transition.setByAngle(306);
+            transition.play();
+            break;
+        case 3:
+            transition.setByAngle(270);
+            transition.play();
+            break;
+        case 4:
+            transition.setByAngle(234);
+            transition.play();
+            break;
+        case 5:
+            transition.setByAngle(198);
+            transition.play();
+            break;
+        case 6:
+            transition.setByAngle(162);
+            transition.play();
+            break;
+        case 7:
+            transition.setByAngle(126);
+            transition.play();
+            break;
+        case 8:
+            transition.setByAngle(90);
+            transition.play();
+            break;
+        case 9:
+            transition.setByAngle(54);
+            transition.play();
+            break;
+        case 10:
+            transition.setByAngle(18);
+            transition.play();
+            break;
 
-		}
+        }
 
-	}
+    }
 
 	private static double player1X = 0;
 	private static double player1Y = 0;
