@@ -548,7 +548,7 @@ public class Controller {
 			
 		} else if (pc.getCharClass().equals(CharClass.CITIZEN) && pc.getShekels() >= 50) {
 			RankUp.rankUpShekels(currentPlayer);
-		} else if (!pc.getCharClass().equals(CharClass.CITIZEN) && pc.getShekels() >= 100 && pc.getPrestige() >= 100) {
+		} else if (!pc.getCharClass().equals(CharClass.CITIZEN) && !pc.getCharClass().equals(CharClass.DUKE) && pc.getShekels() >= 100 && pc.getPrestige() >= 100) {
 			RankUp.rankUpDuke(currentPlayer);
 		}
 		
