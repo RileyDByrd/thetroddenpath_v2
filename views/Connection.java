@@ -83,7 +83,7 @@ public class Connection {
 
 	public void animateWheel(int spinAmount) {
 		RotateTransition transition = new RotateTransition(Duration.seconds(2.5), spinner);
-		transition.setByAngle(44);
+		transition.setByAngle(35);
 		transition.play();
 		switch (spinAmount) {
 		case 1:
