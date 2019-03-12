@@ -15,6 +15,7 @@ import models.enums.TileDirection;
 
 public class Connection {
 
+	private int previousSpin = 0;
 	@FXML
 	private Circle player1;
 
@@ -30,9 +31,9 @@ public class Connection {
 	@FXML
 	private Pane spinner;
 
-    @FXML
-    private Text charClass;
-	
+	@FXML
+	private Text charClass;
+
 	@FXML
 	private Text playerName = new Text();
 
@@ -59,31 +60,89 @@ public class Connection {
 	}
 
 	public void spinWheel() {
-		if(Controller.checkForWin()) {
-			views.Main.endGame();
-		} else if(Controller.currentPlayer.getChars().size() < 1 || Controller.currentPlayer.getChars().get(0).getOccupiedTile() >= 100 || Controller.currentPlayer.getChars().get(0).getWellness() <= 0) {
+		if (Controller.hasGivenUp()) {
+			if (Controller.checkForWin()) {
+				// TODO add message with winners from players array, which is now sorted from
+				// highest scorer to lowest scorer
+			} else {
+				// TODO add "you're all losers" message
+			}
+		} else if (Controller.currentPlayer.getChars().size() < 1
+				|| Controller.currentPlayer.getChars().get(0).getOccupiedTile() >= 100
+				|| Controller.currentPlayer.getChars().get(0).getWellness() <= 0) {
 			Controller.changeTurn();
 		}
 		int spunNumber = Wheel.spinWheel();
 		// animation to move that many spaces
-		animateWheel(1);
+		animateWheel(spunNumber);
 		for (int i = 0; i < spunNumber; i++) {
-			if(Controller.currentPlayer.getChars().size() > 0 && Controller.currentPlayer.getChars().get(0).getOccupiedTile() < 100) {
+			if (Controller.currentPlayer.getChars().size() > 0
+					&& Controller.currentPlayer.getChars().get(0).getOccupiedTile() < 100) {
 				animatePiece();
 			}
 		}
-		if(Controller.currentPlayer.getChars().size() > 0 && Controller.currentPlayer.getChars().get(0).getOccupiedTile() < 100) {
+		if (Controller.currentPlayer.getChars().size() > 0
+				&& Controller.currentPlayer.getChars().get(0).getOccupiedTile() < 100) {
 			Controller.drawCard();
 		}
 	}
 
 	public void animateWheel(int spinAmount) {
+		
+
 		RotateTransition transition = new RotateTransition(Duration.seconds(2.5), spinner);
-		transition.setByAngle(35);
-		transition.play();
+		transition.getNode().setRotate(0);
 		switch (spinAmount) {
 		case 1:
-			transition.setByAngle(20);
+			transition.setByAngle(342);
+			transition.play();
+			previousSpin = 1;
+			break;
+		case 2:
+			transition.setByAngle(306);
+			transition.play();
+			previousSpin = 2;
+			break;
+		case 3:
+			transition.setByAngle(270);
+			transition.play();
+			previousSpin = 3;
+			break;
+		case 4:
+			transition.setByAngle(234);
+			transition.play();
+			previousSpin = 4;
+			break;
+		case 5:
+			transition.setByAngle(198);
+			transition.play();
+			previousSpin = 5;
+			break;
+		case 6:
+			transition.setByAngle(162);
+			transition.play();
+			previousSpin = 6;
+			break;
+		case 7:
+			transition.setByAngle(126);
+			transition.play();
+			previousSpin = 7;
+			break;
+		case 8:
+			transition.setByAngle(90);
+			transition.play();
+			previousSpin = 8;
+			break;
+		case 9:
+			transition.setByAngle(54);
+			transition.play();
+			previousSpin = 9;
+			break;
+		case 10:
+			transition.setByAngle(18);
+			transition.play();
+			previousSpin = 10;
+			break;
 
 		}
 
@@ -178,10 +237,11 @@ public class Connection {
 		shekels.setText("Shekels: " + currentPlayer.getChars().get(0).getShekels());
 		prestige.setText("Prestige: " + currentPlayer.getChars().get(0).getPrestige());
 		wellness.setText("Wellness: " + currentPlayer.getChars().get(0).getWellness());
-//		limbsRemaining.setText("Limbs Remaining: " + currentPlayer.getChars().get(0).getLimbs().size());
+		limbsRemaining.setText("Limbs Remaining: " + currentPlayer.getChars().get(0).getLimbs().size());
 		StringBuilder sb = new StringBuilder();
 		for (int i = 1; i < currentPlayer.getChars().size(); i++) {
-			sb.append(currentPlayer.getChars().get(i).getRole() + ": " + currentPlayer.getChars().get(i).CHARNAME).append(" ");
+			sb.append(currentPlayer.getChars().get(i).getRole() + ": " + currentPlayer.getChars().get(i).CHARNAME)
+					.append(" ");
 		}
 		family.setText(sb.toString());
 		charClass.setText("Class: " + currentPlayer.getChars().get(0).getCharClass());
