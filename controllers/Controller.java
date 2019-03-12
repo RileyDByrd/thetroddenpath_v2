@@ -63,76 +63,31 @@ public class Controller {
 	}
 	
 	public static void determineTurnOrder() {
-//		int order, spin = 0, numOfPlayers = players.length;
-//		System.out.println("1");
-//		Player[] orderedPlayers = new Player[players.length];
-//		System.out.println("2");
-//		
-//		do {
-//			System.out.println("3");
-//			order = Wheel.spinWheel(numOfPlayers) - 1;
-//			System.out.println("4");
-//			if(order >= 0 && order < numOfPlayers && players[order] != null) {
-//				orderedPlayers[spin] = players[order];
-//				players[order] = null;
-//				numOfPlayers -= 1;
-//				spin += 1;
-//			}
-//			System.out.println("10");
-//		}while(numOfPlayers > 1);
-//		System.out.println("11");
-//		
-//		for(Player player : players) {
-//			System.out.println("12");
-//			if(player != null) {
-//				System.out.println("13");
-//				orderedPlayers[players.length - 1] = player;
-//				System.out.println("14");
-//			}
-//		}
-//		System.out.println("15");
-//		players = orderedPlayers;
-//		System.out.println("Turn order made");
+		ArrayList<Player> playersToSpin = new ArrayList<>();
 		
-//			int order, spin = 0, numOfPlayers = players.length;
-//			Player[] orderedPlayers = new Player[players.length];
-//			
-//			do {
-//				order = Wheel.spinWheel(numOfPlayers) - 1;
-//				if(order >= 0 && order < numOfPlayers && players[order] != null) {
-//					orderedPlayers[spin] = players[order];
-//					players[order] = null;
-//					numOfPlayers -= 1;
-//					spin += 1;
-//				}
-//			}while(numOfPlayers > 1);
-			
-			// Remove a player from playersToSpin as they are called
-			ArrayList<Player> playersToSpin = new ArrayList<>();
-			
-			for(int p = 0; p < players.length; p++) {
-				playersToSpin.add(players[p]);
-			}
-			
-			ArrayList<Player> orderedPlayers = new ArrayList<>();
-			
-			while(playersToSpin.size() > 0) {
-				int spin = 0;
-				while(spin == 0) {
-					spin = Wheel.spinWheel(playersToSpin.size());
-				}
-				orderedPlayers.add(playersToSpin.get(spin - 1));
-				playersToSpin.remove(spin - 1);
-			}
-			
-			for(int p = 0; p < players.length; p++) {
-				players[p] = orderedPlayers.get(p);
-			}
-			System.out.println("Turn order made");
-			
-			changeTurn();
-			System.out.println(currentPlayer.NAME);
+		for(int p = 0; p < players.length; p++) {
+			playersToSpin.add(players[p]);
 		}
+		
+		ArrayList<Player> orderedPlayers = new ArrayList<>();
+		
+		while(playersToSpin.size() > 0) {
+			int spin = 0;
+			while(spin == 0) {
+				spin = Wheel.spinWheel(playersToSpin.size());
+			}
+			orderedPlayers.add(playersToSpin.get(spin - 1));
+			playersToSpin.remove(spin - 1);
+		}
+		
+		for(int p = 0; p < players.length; p++) {
+			players[p] = orderedPlayers.get(p);
+		}
+		System.out.println("Turn order made");
+		
+		changeTurn();
+		System.out.println(currentPlayer.NAME);
+	}
 
 
 	private static void dragonTurn() {
@@ -143,6 +98,8 @@ public class Controller {
 	private static void dragonAttack() {
 		int[] dragonTiles = drago.getDragonTiles();
 		PlayerChar pChar;
+		
+		System.out.println("dragonAttack");
 		
 		for(Player player : players) {
 			if(player.getChars().size() > 0) {
@@ -164,7 +121,9 @@ public class Controller {
 		//if runaway == true, inform the player that they succeeded
 				//in running away
 		
+		
 		chance = rng.nextInt(2);
+		System.out.println("dragonAttackMenu");
 		if(chance == 1) {
 			runaway = false;
 			dragonAttackDamage(pChar);
@@ -194,6 +153,8 @@ public class Controller {
 		int limbIndex = 0;
 		ArrayList<Boolean> limbs = pChar.getLimbs();
 		
+		System.out.println("availableLimbs");
+		
 		for(int i = 0; i < limbs.size(); i++) {
 			if(limbs.get(i) == true) {
 				limbIndex = i;
@@ -208,6 +169,8 @@ public class Controller {
 	public static int determineDamage(int limbIndex) {
 		int limbDamage = 0;
 		
+		System.out.println("determineDamage");
+		
 		if(limbIndex == 0) {
 			limbDamage = 10;
 		}else {
@@ -220,10 +183,17 @@ public class Controller {
 	public static void applyDamage(PlayerChar pChar) {
 		int limbIndex, damage, wellness;
 		
+		System.out.println("applyDamage");
+		
 		limbIndex = availableLimbs(pChar);
 		damage = determineDamage(limbIndex);
 		wellness = pChar.getWellness();
+		
+		System.out.println(wellness);
+		
 		pChar.setWellness(wellness - damage);
+		
+		System.out.println(wellness - damage);
 	}
 
 	private static void initBoard() {
