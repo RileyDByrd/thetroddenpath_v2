@@ -55,7 +55,7 @@ public class Main extends Application {
 		Controller.initPlayers(PlayerInit.getNames());
 	}
 	
-	public void endGame() {
+	public static void endGame() {
 		window.setTitle("You've reached the end!");
 		window.setResizable(false);
 		
