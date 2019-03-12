@@ -1,14 +1,15 @@
 package views;
 	
 import java.io.IOException;
-import views.PlayerInit;
+
 import controllers.Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import views.enums.NextTileDirection;
 
 public class Main extends Application {
 	
@@ -52,5 +53,20 @@ public class Main extends Application {
 		window.show();
 		Controller.run();
 		Controller.initPlayers(PlayerInit.getNames());
+	}
+	
+	public static void endGame() {
+		window.setTitle("You've reached the end!");
+		window.setResizable(false);
+		
+		Text label = new Text();
+		label.setText("These are the players' rankings:");
+//		print players in order of most to least points
+		
+		VBox layout = new VBox(20);
+		layout.getChildren().addAll(label);
+		Scene scene = new Scene(layout, 300, 500);
+		window.setScene(scene);
+		window.show();
 	}
 }

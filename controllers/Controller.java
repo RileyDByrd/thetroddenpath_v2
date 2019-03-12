@@ -139,20 +139,18 @@ public class Controller {
 	private static void dragonAttackDamage(PlayerChar pChar) {
 		int count = 0;
 
-		System.out.println("dragonAttackDamage");
-		
 		if(drago.getOccupiedTile() == pChar.getOccupiedTile()) {
 			do {
 				applyDamage(pChar);
-			}while(count < 2);
-		}else {
+				count++;
+			} while(count < 2);
+		} else {
 			applyDamage(pChar);
 		}
 	}
 	
 	private static int availableLimbs(PlayerChar pChar) {
 		int limbIndex = 0;
-		boolean limb = true;
 		ArrayList<Boolean> limbs = pChar.getLimbs();
 		
 		System.out.println("availableLimbs");
@@ -360,7 +358,7 @@ public class Controller {
 		
 		// If there is one player who is not at the end and is alive, there is one turn that's not finished.
 		for(Player p : players) {
-			if(p.getChars().get(0).getOccupiedTile() < 100 && p.getChars().get(0).getWellness() > 0) {
+			if(p.getChars().size() > 0 && p.getChars().get(0).getOccupiedTile() < 100 && p.getChars().get(0).getWellness() > 0) {
 				allTurnsAreFin = false;
 			}
 		}
@@ -369,12 +367,17 @@ public class Controller {
 			// Map players to their scores
 			ArrayList<AbstractMap.SimpleEntry<Player, Integer>> playersToScores = new ArrayList<>();
 //			HashMap<Player, Integer> playersToScores = new HashMap<>();
-						
+			
+			ArrayList<Player> playersWithoutChars = new ArrayList<>();
 			for(int p = 0; p < players.length; p++) {
-				PlayerChar pChar = players[p].getChars().get(0);
-				
-				// Derive scores from PlayerChar prestige and shekels.
-				playersToScores.add(new AbstractMap.SimpleEntry<Player, Integer>(players[p], pChar.getPrestige() + pChar.getShekels()));
+				if(players[p].getChars().size() > 0) {
+					PlayerChar pChar = players[p].getChars().get(0);
+					
+					// Derive scores from PlayerChar prestige and shekels.
+					playersToScores.add(new AbstractMap.SimpleEntry<Player, Integer>(players[p], pChar.getPrestige() + pChar.getShekels()));
+				} else {
+					playersWithoutChars.add(players[p]);
+				}
 			}
 			
 			// Resolve duplicates and sort the players based on their scores.
@@ -386,10 +389,14 @@ public class Controller {
 			for(int orderedP = 0; orderedP < sortedPScores.size(); orderedP++) {
 				players[orderedP] = sortedPScores.get(orderedP).getKey();
 			}
+			
+			for(int charlessP = 0; charlessP < playersWithoutChars.size(); charlessP++) {
+				players[charlessP + sortedPScores.size()] = playersWithoutChars.get(charlessP);
+			}
 		}
 		
 		System.out.println("Checked for win");
-		return !allTurnsAreFin;
+		return allTurnsAreFin;
 	}
 	
 	private static ArrayList<AbstractMap.SimpleEntry<Player, Integer>> resolveDups(ArrayList<AbstractMap.SimpleEntry<Player, Integer>> arrayToDedup) {
@@ -432,7 +439,7 @@ public class Controller {
 		boolean allCharsAreDead = false;
 		
 		// If the current character's wellness is zero, then make his heir the current character, assuming he has one.
-		if(currentPlayer.getChars().get(0).getWellness() <= 0) {
+		if(currentPlayer.getChars().size() > 0 && currentPlayer.getChars().get(0).getWellness() <= 0) {
 			
 			// Does the player have more than one character? If not, doesn't have an heir.
 			if(currentPlayer.getChars().size() > 1) {
@@ -514,11 +521,13 @@ public class Controller {
 	}
 	
 	public static void drawCard() {
-		ChanceCard chanceCard = new ChanceCard(TILES.get(currentPlayer.getChars().get(0).getOccupiedTile()).getKey(), currentPlayer);
-		System.out.println("Card drawn");
-		CardEffects.message(chanceCard);
-		rankUpChar(currentPlayer);
-		changeTurn();
+		if(currentPlayer.getChars().size() > 0) {
+			ChanceCard chanceCard = new ChanceCard(TILES.get(currentPlayer.getChars().get(0).getOccupiedTile()).getKey(), currentPlayer);
+			System.out.println("Card drawn");
+			CardEffects.message(chanceCard);
+			rankUpChar(currentPlayer);
+			changeTurn();
+		}
 //		CardEffects.message(chanceCard);
 	}
 	
