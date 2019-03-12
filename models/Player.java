@@ -43,7 +43,14 @@ public class Player {
 		
 		StringBuilder builder = new StringBuilder();
 		builder.append("Player Name: ").append(NAME)
-		.append("\nAmount of characters: ").append(getChars().size());
+		.append("\nNumber of characters: ").append(getChars().size());
+		
+		if(getChars().size() > 0) {
+			builder.append("\nShekels: ").append(getChars().get(0).getShekels())
+			.append("\nPrestige: ").append(getChars().get(0).getPrestige());
+		} else {
+			builder.append("\nShekels: 0").append("\nPrestige: 0");
+		}
 		return builder.toString();
 	}
 
