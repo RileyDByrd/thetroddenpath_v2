@@ -196,6 +196,6 @@ public class Connection {
 	}
 
 	public void giveUp() {
-		controllers.Controller.giveUp();
+		views.Wizard.giveUp();
 	}
 }
