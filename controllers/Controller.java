@@ -145,10 +145,12 @@ public class Controller {
 		PlayerChar pChar;
 		
 		for(Player player : players) {
-			pChar = player.getChars().get(0);
-			for(int tile : dragonTiles) {
-				if(tile == pChar.getOccupiedTile()) {
-					dragonAttackMenu(pChar);					
+			if(player.getChars().size() > 0) {
+				pChar = player.getChars().get(0);
+				for(int tile : dragonTiles) {
+					if(tile == pChar.getOccupiedTile()) {
+						dragonAttackMenu(pChar);					
+					}
 				}
 			}
 		}
@@ -176,15 +178,15 @@ public class Controller {
 	}
 	
 	private static void dragonAttackDamage(PlayerChar pChar) {
-		int count = 0;
-
-		if(drago.getOccupiedTile() == pChar.getOccupiedTile()) {
-			do {
-				applyDamage(pChar);
-			}while(count < 2);
-		}else {
+//		int count = 0;
+//
+//		if(drago.getOccupiedTile() == pChar.getOccupiedTile()) {
+//			do {
+//				applyDamage(pChar);
+//			}while(count < 2);
+//		}else {
 			applyDamage(pChar);
-		}
+//		}
 	}
 	
 	private static int availableLimbs(PlayerChar pChar) {
