@@ -178,7 +178,7 @@ public class Connection {
 		shekels.setText("Shekels: " + currentPlayer.getChars().get(0).getShekels());
 		prestige.setText("Prestige: " + currentPlayer.getChars().get(0).getPrestige());
 		wellness.setText("Wellness: " + currentPlayer.getChars().get(0).getWellness());
-		limbsRemaining.setText("Limbs Remaining: " + currentPlayer.getChars().get(0).getLimbs().size());
+//		limbsRemaining.setText("Limbs Remaining: " + currentPlayer.getChars().get(0).getLimbs().size());
 		StringBuilder sb = new StringBuilder();
 		for (int i = 1; i < currentPlayer.getChars().size(); i++) {
 			sb.append(currentPlayer.getChars().get(i).getRole() + ": " + currentPlayer.getChars().get(i).CHARNAME).append(" ");
